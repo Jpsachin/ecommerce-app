@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# E-commerce App
+# Ecommerce App
 
 A responsive e-commerce storefront built with Next.js App Router and TypeScript. Products are loaded from the public DummyJSON Products API.
 
@@ -24,12 +23,18 @@ pnpm build
 pnpm start
 ```
 
+## Tests
+
+```bash
+pnpm test
+```
+
 ## Architecture and key decisions
 
 - Server components fetch catalog and product data from DummyJSON through `app/lib/products.ts`.
 - Presentation is split into reusable product cards, header, product controls, and cart components.
 - React Context manages cart state and quantities across the application.
-- Cart contents are persisted in `sessionStorage`; hydration is explicit so server and client markup do not mismatch.
+- Cart contents are persisted in `sessionStorage`; hydration completes before cart controls rely on restored data.
 - Plain CSS keeps the dependency list small and provides responsive layouts without a component library.
 
 ## Trade-offs and limitations
@@ -38,6 +43,3 @@ pnpm start
 - Product API requests are cached and revalidated for five minutes, so changes to DummyJSON may not appear immediately.
 - The cart is intentionally session-scoped and is not synchronized across browser tabs or devices.
 - This assignment does not include checkout, authentication, inventory reservations, or payments.
-=======
-# EcommerceApp
->>>>>>> bfe883f2ea5292a1f49c675a12f8509389db7293
