@@ -23,7 +23,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => {
+    const hydrate = () => {
       try {
         const saved = sessionStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -42,9 +42,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       } finally {
         setHydrated(true);
       }
-    }, 0);
+    };
 
-    return () => window.clearTimeout(timeout);
+    queueMicrotask(hydrate);
   }, []);
 
   useEffect(() => {
