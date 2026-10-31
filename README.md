@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-commerce App
 
-## Getting Started
+A responsive e-commerce storefront built with Next.js App Router and TypeScript. Products are loaded from the public DummyJSON Products API.
 
-First, run the development server:
+## Prerequisites
+
+- Node.js 20.9 or newer
+- pnpm 10
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For a production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm build
+pnpm start
+```
 
-## Learn More
+## Architecture and key decisions
 
-To learn more about Next.js, take a look at the following resources:
+- Server components fetch catalog and product data from DummyJSON through `app/lib/products.ts`.
+- Presentation is split into reusable product cards, header, product controls, and cart components.
+- React Context manages cart state and quantities across the application.
+- Cart contents are persisted in `sessionStorage`; hydration is explicit so server and client markup do not mismatch.
+- Plain CSS keeps the dependency list small and provides responsive layouts without a component library.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Trade-offs and limitations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Product data and product images depend on the availability of the public DummyJSON service.
+- Product API requests are cached and revalidated for five minutes, so changes to DummyJSON may not appear immediately.
+- The cart is intentionally session-scoped and is not synchronized across browser tabs or devices.
+- This assignment does not include checkout, authentication, inventory reservations, or payments.
