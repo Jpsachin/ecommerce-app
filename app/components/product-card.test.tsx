@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 import { ProductCard } from "./product-card";
 import type { Product } from "../lib/products";
 
-vi.mock("next/image", () => ({ default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} /> }));
+vi.mock("next/image", () => ({
+  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <span role="img" aria-label={props.alt ?? ""} />
+  ),
+}));
 
 const product: Product = { id: 1, title: "Phone", description: "Phone", price: 299.99, discountPercentage: 10, rating: 4.7, thumbnail: "https://example.com/phone.jpg", images: [] };
 

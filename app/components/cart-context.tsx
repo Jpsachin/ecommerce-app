@@ -26,9 +26,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const timeout = window.setTimeout(() => {
       try {
         const saved = sessionStorage.getItem(STORAGE_KEY);
-        if (saved) setCart(JSON.parse(saved) as CartItem[]);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const validItems = parsed.filter((item): item is CartItem =>
+              item && typeof item === "object" && Number.isInteger(item.id) &&
+              typeof item.title === "string" && typeof item.price === "number" &&
+              Number.isFinite(item.price) && Number.isInteger(item.quantity) && item.quantity > 0
+            );
+            setCart(validItems);
+          }
+        }
       } catch {
-        sessionStorage.removeItem(STORAGE_KEY);
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* Storage can be unavailable. */ }
       } finally {
         setHydrated(true);
       }
@@ -38,7 +48,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (hydrated) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    if (hydrated) {
+      try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch { /* Keep the in-memory cart usable. */ }
+    }
   }, [cart, hydrated]);
 
   const addToCart = (product: Product) => {
