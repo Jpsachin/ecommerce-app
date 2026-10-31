@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # E-commerce App
 
 A responsive e-commerce storefront built with Next.js App Router and TypeScript. Products are loaded from the public DummyJSON Products API.
@@ -37,3 +38,6 @@ pnpm start
 - Product API requests are cached and revalidated for five minutes, so changes to DummyJSON may not appear immediately.
 - The cart is intentionally session-scoped and is not synchronized across browser tabs or devices.
 - This assignment does not include checkout, authentication, inventory reservations, or payments.
+=======
+# EcommerceApp
+>>>>>>> bfe883f2ea5292a1f49c675a12f8509389db7293
